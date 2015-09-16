@@ -215,6 +215,15 @@ class StampsService(BaseService):
 
         return [rate for rate in rates.Rates.Rate]
 
+	def get_scan(self, transaction_ids, from_address, image_type='Pdf', instructions=True):
+		"""Get a SCAN form.
+		:param transaction_ids: An array of `StampsTxID`s (not `TrackingNumber`s)
+		:param from_address: The shipping 'from' address.
+		:param image_type: Default `Pdf`. Get the SCAN in other image formats (`Pdf`, `Png`, etc.).
+		:param instructions: Default `True`. Get the SCAN with an instructional page attached.
+		"""
+		return self.call("CreateScanForm", StampsTxIDs=dict(guid=transaction_ids), FromAddress=from_address, ImageType=image_type, PrintInstructions=instructions)
+
     def get_tracking(self, transaction_id):
         """Get tracking events for a shipment.
 
